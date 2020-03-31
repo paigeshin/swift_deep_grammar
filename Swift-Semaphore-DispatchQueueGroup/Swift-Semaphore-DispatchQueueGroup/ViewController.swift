@@ -14,14 +14,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        semaphoreExecution()
+        
         print("Waiting for images to finish fetching...")
     }
     
-    //Shared Resource를 사용하면 원하는대로 작동되지 않을 수 있음
-    func dispatghGroupExecution(){
-        
-    }
-    
+
     //Background로 multi threading을 할 때, 접근하는 resource가 수정이 많이되면 application이 crash할 가능성이 높음.
     func semaphoreExecution(){
         let semaphore = DispatchSemaphore(value: 0)
@@ -49,7 +48,7 @@ class ViewController: UIViewController {
         }
     }
     
-    //특정 데이터에 접근할 때는 dispatchGroup을 쓰기에 부적절하다.
+    //특정 공유된 데이터에 접근할 때는 dispatchGroup을 쓰기에 부적절하다.
     func dispatchGroupExecution(){
         //DispatchGroup - Async Await 같은 개념
         let dispatchGroup = DispatchGroup()

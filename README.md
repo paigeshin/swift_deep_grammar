@@ -2,6 +2,9 @@
 
 # DispatchGroup vs Semaphore 
 
+https://www.notion.so/DispatchGroup-f7d1aa2278a44ead8275b6c3ce6924b0
+        
+https://www.notion.so/Semaphore-64b0edff29514ccd9602ef8bec1ddf56
         
 ❗️DispatchGroup으로 Multi-threading을 돌리면서 shared resource에 접근하려하면 에러가 발생할 수 있다.
 
@@ -107,3 +110,88 @@
     3. dispatchQueue.async 코드 블록을 만듬
     4. 각각의 background task가 끝나는 부분에 `signal()` 메소드 호출
     5. 새로운 background task가 시작하기 전에 `wait()` 메소드 호출
+
+
+
+### Swift `where` keyword
+
+https://www.notion.so/Swift-Where-Keyword-a22631558ee44cc3bafe46bf84be4372
+
+`switch`
+
+    enum Action {
+        case createUser(age: Int)
+        case createPost
+        case logout
+    }
+    
+    func printAction(action: Action){
+        switch action {
+            case .createUser(let age) where age < 21:
+                print("Young and wild!")
+            case .createUser:
+                print("Older and wise!")
+            case .createPost:
+                print("Creating a post")
+            case .logout:
+                print("Log out")
+        }
+    }
+
+`for loop`
+
+    let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    
+    for number in numbers where number % 2 == 0 {
+            print(number)
+    }
+
+`extension` 
+
+    extension Array where Element == Int {
+        func printAverageAge()[
+            let total = reduce(0, +)
+            let average = total / count 
+            print("Average age is \(average)")
+        }
+    }
+    
+    let ages = [20, 15, 45, 32, 67]
+    ages.printAverageAge()
+
+`Array.contains`
+
+    let fruits = ["Banana", "Apple", "Kiwi"]
+    let containsBanana = fruits.contains(where: {(fruit) in 
+            return fruit == "Banana"
+    })
+    
+    
+
+### Swift Async Fuction 만들기
+
+https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
+
+    // async await fetch function
+    func fetchSomethingAsyncAwait() throws -> Data? {
+        guard let url = URL(string: "https://www.google.com") else { throw NetworkError.url }
+        
+        var data: Data?
+        
+        // Semaphore - initialization
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        URLSession.shared.dataTask(with: url) { (d, r, e) in
+            data = d
+    
+            semaphore.signal() //Semaphore - Stop waiting
+        }.resume()
+        
+        //Semaphore - Wait until the condition is met
+        _ = semaphore.wait(timeout: .distantFuture)
+        
+        return data
+    }
+
+- `closure` 을 사용하지 않는다.
+- `semaphore` 를 사용.
