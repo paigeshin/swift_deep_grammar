@@ -198,6 +198,9 @@ https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
 
 # inout keyword
 
+https://www.notion.so/Swift-inout-c5bf9b489a994872a5673f9d13cd692b
+
+
     import UIKit
         
         class Employee {
@@ -229,6 +232,8 @@ https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
 
 # Subscript
 
+https://www.notion.so/swift-subscript-keyword-a801e4aa9d8e4ce5986e05dd9f1c359b
+
     import UIKit
         
         //Subscript는 기본적으로 `private` value에 접근할 수 있게 하는 통로임.
@@ -258,6 +263,8 @@ https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
 
 #Swift Generic
 
+
+https://www.notion.so/Swift-Generic-350fe6558bab4dc7a57c15f0bb164ad5
 
 참고문서:
 
@@ -411,3 +418,90 @@ https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
             print("I'm not implemented")
         }
     }
+
+
+# typealias
+
+https://www.notion.so/TypeAlias-swift-aa12225d4ccf4eec810e5eb7b2c36201
+
+### Type Alias basic examples
+
+        typealias studentName = String
+        let name: studentName = "Paige"
+        typealias Employees = Array<String>
+        typealias GridPoint = (Int, Int)
+        typealias CompletionHandler = (String) -> Void
+        typealias CustomDictionary = Dictionary<String, Int>
+        let phoneNumbers: CustomDictionary
+
+### Real Life Example
+
+        //-Real Life example
+        class MyManager {
+            
+            func foo(success: (_ data: Data, _ message: String, _ status: Int, _ isEnabled: Bool) -> (),
+                     failure: (_ error: Error, _ message: String, _ workaround: AnyObject) -> ())
+            {
+                
+            }
+            
+            func bar(success: (_ data: Data, _ message: String, _ status: Int, _ isEnabled: Bool) -> (),
+                     failure: (_ error: Error, _ message: String, _ workaround: AnyObject) -> ())
+            {
+                    
+            }
+
+            
+        }
+
+        //info - Codable is a typealias for both Decodable and Encodable protocols.
+        class RefactoredMyManager {
+            
+            typealias Success = (_ data: Data, _ message: String, _ status: Int, _ isEnabled: Bool) -> ()
+            typealias Failure = (_ error: Error, _ message: String, _ workaround: AnyObject) -> ()
+            
+            func foo(success: Success, failure: Failure){
+                
+
+                
+            }
+            
+        }
+
+        var refactoredManager = RefactoredMyManager()
+        refactoredManager.foo(success: { (data, string, int, bool) in
+            
+        }) { (error, string, anyobject) in
+            
+        }
+        
+### Combining Protocols
+
+        typealias CommonDataSource = UICollectionViewDataSource & UITableViewDataSource
+        
+### Closure Type Alias
+    
+
+        //- closure type alias
+        // Closure Type Alias를 사용할 때는 return 값이 없는 함수가 사용하기 편하다.
+        typealias NewCompletionHandler = (Int, Int) -> Void
+        typealias NewCompletionHandlerWithReturnValue = (Int, Int) -> Int  //=> 간단한 함수 protocol을 정의하는 느낌으로 받아들이면 쓸만할 듯.
+
+        func method(handler: NewCompletionHandler){
+            handler(15, 15)
+        }
+
+        let newFunctionWithReturn: NewCompletionHandlerWithReturnValue = { (_ value1: Int, _ value2: Int) in
+            return value1 + value2
+        }
+
+        let result = newFunctionWithReturn(15, 30)
+        print("result: \(result)")
+
+
+        func myMethod(sumHandler: NewCompletionHandlerWithReturnValue) -> Int {
+            return sumHandler(15, 20)
+        }
+
+        let result2 = myMethod(sumHandler: newFunctionWithReturn)
+        print(result2)
