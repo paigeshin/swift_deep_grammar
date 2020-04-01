@@ -59,3 +59,76 @@ protocol Container {
     subscript(i: Int) -> ItemType { get }
 }
 
+struct Stack<T>: Container {
+    
+    var items = [T]()
+    
+    mutating func push(item: T) {
+        items.append(item)
+    }
+    
+    mutating func pop() -> T {
+        return items.removeLast()
+    }
+    
+    // conformance to the Container protocol
+    mutating func append(item: T) {
+        self.push(item: item)
+    }
+    
+    var count: Int {
+        return items.count
+    }
+    
+    subscript(i: Int) -> T {
+        return items[i]
+    }
+    
+}
+
+func allItemsMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable { //C1.ItemType == C2.ItemType 이 부분이 데이터 타입을 채킹하는 부분임, 만약 두 개의 다른 데이터 타입을 담은 generic array를 주면 compile하지 않는다.
+        
+        //Check that both containers contain the same number of items.
+        if someContainer.count != anotherContainer.count {
+            return false
+        }
+        
+        //Check two container index by index
+        for i in 0..<someContainer.count {
+            if someContainer[i] != anotherContainer[i] {
+                return false
+            }
+        }
+        
+        // All items match, so return true.
+        return true
+}
+
+
+//* Protocol Generic using `where` clause
+protocol MyProtocol {
+    associatedtype AType
+    func foo()
+}
+
+class MyClassInt: NSObject, MyProtocol {
+    typealias AType = Int
+    
+    func foo(){
+        print(type(of: self)) //데이터타입 채킹
+    }
+    
+}
+
+class MyClassString: NSObject, MyProtocol {
+    typealias AType = String
+    
+    func foo(){
+        print("I'm not implemented")
+    }
+}
+
+
+
