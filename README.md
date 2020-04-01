@@ -230,7 +230,7 @@ https://www.notion.so/Swift-inout-c5bf9b489a994872a5673f9d13cd692b
 2. parameter로 들어온 값을 변경하려면 `inout` keyword를 사용한다.
 
 
-# Subscript
+# Subscribe
 
 https://www.notion.so/swift-subscript-keyword-a801e4aa9d8e4ce5986e05dd9f1c359b
 
@@ -423,6 +423,7 @@ https://www.notion.so/Swift-Generic-350fe6558bab4dc7a57c15f0bb164ad5
 # typealias
 
 https://www.notion.so/TypeAlias-swift-aa12225d4ccf4eec810e5eb7b2c36201
+https://medium.com/@ahmadfayyas/swift-quick-elegant-code-typealias-8e6d59f07f32
 
 ### Type Alias basic examples
 
@@ -505,3 +506,47 @@ https://www.notion.so/TypeAlias-swift-aa12225d4ccf4eec810e5eb7b2c36201
 
         let result2 = myMethod(sumHandler: newFunctionWithReturn)
         print(result2)
+
+# Swift Equatable
+
+https://www.notion.so/Swift-Equatable-1d4593157f2c4ef2b530f1f5e77878c5
+
+- 기본적으로 xCode는 두 가지 값이 같은 것인지 틀린 것인지 알 수가 없다.
+- 그래서 Equatable Protocol을 채택해야 한다.
+
+
+        class A: Equatable {
+            
+            var num: Int
+            
+            init(num: Int){
+                self.num = num
+            }
+            
+            static func == (lhs: A, rhs: A) -> Bool {
+                return lhs.num == rhs.num
+            }
+            
+        }
+
+        class B: Equatable {
+            
+            var num: Int
+            
+            init(num: Int){
+                self.num = num
+            }
+            
+            static func == (lhs: B, rhs: B) -> Bool {
+                return lhs.num == rhs.num
+            }
+            
+        }
+
+
+        if A(num: 1) == A(num: 2) {
+            print("same")
+        } else {
+            print("different")
+        }
+

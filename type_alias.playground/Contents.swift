@@ -81,3 +81,7 @@ func myMethod(sumHandler: NewCompletionHandlerWithReturnValue) -> Int {
 
 let result2 = myMethod(sumHandler: newFunctionWithReturn)
 print(result2)
+
+
+
+
