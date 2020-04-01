@@ -195,3 +195,34 @@ https://www.notion.so/Swift-Async-Await-da6f50269f774d5782d7f3c28bdfd7d5
 
 - `closure` 을 사용하지 않는다.
 - `semaphore` 를 사용.
+
+### inout keyword
+
+    import UIKit
+        
+        class Employee {
+            var name: String
+            var age: Int
+            init(name: String, age: Int) {
+                self.name = name
+                self.age = age
+            }
+        }
+        
+        //Swift에서 기본적으로 parameter로 들어오는 값은 `let` constant 이다. 그래서 값을 바꿀 수 없다.
+        //아래 코드는 error가 발생하는 코드.
+        /*
+        func changeEmployeeData(emp: Employee){
+            emp = Employee(name: "Suneet", age: 25)
+        }
+        */
+        
+        func changeEmployeeData(emp: inout Employee){
+            emp = Employee(name: "Charles", age: 15)
+        }
+        
+        var employee1 = Employee(name: "Brian", age: 24)
+
+1. 기본적으로 swift에서 function의 parameter 값은 `let` 으로 선언 되어 있음
+2. parameter로 들어온 값을 변경하려면 `inout` keyword를 사용한다.
+
