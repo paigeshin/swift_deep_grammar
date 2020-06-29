@@ -230,7 +230,7 @@ https://www.notion.so/Swift-inout-c5bf9b489a994872a5673f9d13cd692b
 2. parameter로 들어온 값을 변경하려면 `inout` keyword를 사용한다.
 
 
-# Subscribe
+# Subscript
 
 https://www.notion.so/swift-subscript-keyword-a801e4aa9d8e4ce5986e05dd9f1c359b
 
